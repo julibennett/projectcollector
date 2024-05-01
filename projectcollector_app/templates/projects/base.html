@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Portfolio of Projects!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <header class="bg-white shadow">
+    <nav class="container mx-auto p-6">
+      <div class="flex justify-between items-center">
+        <ul class="flex items-center">
+          <li>
+            <a href="/" class="text-blue-500 font-bold text-lg">Portfolio</a>
+          </li>
+        </ul>
+        <ul class="flex items-center">
+          <li>
+            <a href="/about" class="text-gray-700 hover:text-blue-700 p-4">About Julianna  </a>
+            <a href="/projects" class="text-gray-700 hover:text-blue-700"> View All Projects</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="container mx-auto px-6 py-8">
+    {% block content %}
+   
+    {% endblock %}
+  </main>
+  <footer class="bg-white shadow mt-8 p-6">
+    <div class="container mx-auto text-center text-gray-700">
+      All Rights Reserved, &copy; 2024 Julianna Bennett Portfolio
+    </div>
+  </footer>
+</body>
+</html>
