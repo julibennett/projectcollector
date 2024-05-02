@@ -21,8 +21,9 @@
         </ul>
         <ul class="flex items-center">
           <li>
-            <a href="/about" class="text-gray-700 hover:text-blue-700 p-4">About Julianna  </a>
-            <a href="/projects" class="text-gray-700 hover:text-blue-700"> View All Projects</a>
+            <a href="{% url 'about' %}" class="text-gray-700 hover:text-blue-700 p-4">About Julianna  </a>
+            <a href="{% url 'projects_create' %}" class="text-gray-700 hover:text-blue-700 p-4">Add a Project  </a>
+            <a href="{% url 'index' %}" class="text-gray-700 hover:text-blue-700"> View All Projects</a>
           </li>
         </ul>
       </div>
