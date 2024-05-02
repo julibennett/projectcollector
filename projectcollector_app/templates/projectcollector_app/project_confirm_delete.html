@@ -1,13 +1,17 @@
 {% extends 'projects/base.html' %}
 
 {% block content %}
-  <h1>Delete Project</h1>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-center mb-4">Delete Project</h1>
 
-  <h4>Are you sure you want to delete <span class="teal-text">{{ object.name }}</span>?</h4>
+  <h4 class="text-xl text-center mb-4">Are you sure you want to delete <span class="text-teal-600">{{ object.name }}</span>?</h4>
 
-  <form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="{% url 'detail' project.id %}">Cancel</a>
-  </form>
+  <div class="flex justify-center">
+    <form action="" method="POST" class="space-x-4">
+      {% csrf_token %}
+      <input type="submit" value="Yes - Delete!" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+      <a href="{% url 'detail' project.id %}" class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded cursor-pointer">Cancel</a>
+    </form>
+  </div>
+</div>
 {% endblock %}

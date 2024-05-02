@@ -1,19 +1,30 @@
 {% extends 'projects/base.html' %}
 
 {% block content %}
-{% if object %}
-    <h1>Edit <span class="teal-text">{{object.name}}</span></h1>
-{% else %}
-    <h1>Add Cat</h1>
-{% endif %}
-  <!-- Leaving the action empty makes the form post to the same url used to display it -->
-  <form action="" method="POST">
-    <!-- Django requires the following for security purposes -->
+<div class="container mx-auto px-4 py-8">
+  {% if object %}
+      <h1 class="text-3xl font-bold text-center mb-6">Edit <span class="text-teal-600">{{ object.name }}</span></h1>
+  {% else %}
+      <h1 class="text-3xl font-bold text-center mb-6">Add Cat</h1>
+  {% endif %}
+
+  <form action="" method="POST" class="w-full max-w-2xl mx-auto bg-white p-8 border border-gray-300 rounded-lg shadow-lg">
     {% csrf_token %}
-    <table>
-      <!-- Render the inputs inside of <tr>s & <td>s -->
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
+    <div class="space-y-4">
+      {% for field in form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+          <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:'' }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500" {{ field.field.widget.attrs|default_if_none:'' }}>
+          {% if field.help_text %}
+            <p class="mt-2 text-sm text-gray-500">{{ field.help_text }}</p>
+          {% endif %}
+          {% if field.errors %}
+            <p class="text-sm text-red-500">{{ field.errors }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <input type="submit" value="Submit!" class="mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
   </form>
+</div>
 {% endblock %}
