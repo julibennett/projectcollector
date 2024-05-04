@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Project
+from .forms import FeedbackForm
 
 # Create your views here.
 
@@ -27,7 +28,19 @@ def projects_index(request):
 
 def projects_detail(request, project_id):
    project = Project.objects.get(id=project_id)
-   return render(request, 'projects/detail.html', {'project': project})
+   feedback_form = FeedbackForm()
+   return render(request, 'projects/detail.html', {
+      'project': project,
+      'feedback_form': feedback_form,
+      })
+
+def add_feedback(request, pk):
+   form = FeedbackForm(request.POST)
+   if form.is_valid():
+      new_feedback = form.save(commit=False)
+      new_feedback.project_id = pk
+      new_feedback.save()
+   return redirect('detail', project_id=pk)
 
 class ProjectCreate(CreateView):
   model = Project

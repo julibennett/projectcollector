@@ -25,3 +25,6 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"{self.comment} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']
