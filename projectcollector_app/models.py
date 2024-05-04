@@ -15,3 +15,13 @@ class Project(models.Model):
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'project_id': self.id})
+
+
+class Feedback(models.Model):
+    date = models.DateField('feedback date')
+    comment = models.CharField(max_length = 50)
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.comment} on {self.date}"
