@@ -1,7 +1,15 @@
 from django.db import models
 from django.urls import reverse
 
-# Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('tags_detail', kwargs={'pk':self.id})
 
 class Project(models.Model):
     name = models.CharField(max_length=100)
@@ -9,6 +17,7 @@ class Project(models.Model):
     description = models.TextField(max_length=300)
     live = models.CharField(max_length=150)
     created = models.CharField(max_length=100)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,20 @@
+{% extends 'projects/base.html' %}
+{% block content %}
+
+<h1 class="text-2xl font-bold text-gray-800 mt-6 mb-4 text-center">Tag Details</h1>
+
+<div class="flex justify-center">
+  <div class="w-full max-w-md">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="p-5">
+        <span class="block text-xl font-medium text-gray-900">{{ tag.name }}</span>
+      </div>
+      <div class="bg-gray-100 p-4 flex justify-between items-center">
+        <a href="{% url 'tags_update' tag.id %}" class="text-blue-500 hover:text-blue-700 transition duration-150 ease-in-out">Edit</a>
+        <a href="{% url 'tags_delete' tag.id %}" class="text-red-500 hover:text-red-700 transition duration-150 ease-in-out">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

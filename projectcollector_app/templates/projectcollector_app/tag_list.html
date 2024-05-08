@@ -1,0 +1,18 @@
+{% extends 'projects/base.html' %}
+{% block content %}
+
+<h1 class="text-3xl font-bold text-gray-800 mt-6 mb-4 text-center">Tag List</h1>
+
+<div class="flex flex-wrap justify-center">
+  {% for tag in tag_list %}
+    <a href="{% url 'tags_detail' tag.id %}" class="m-2">
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+          <div class="p-4">
+              <span class="text-xl font-medium text-gray-900">{{ tag.name }}</span>
+          </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

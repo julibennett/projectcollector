@@ -1,0 +1,31 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+<div class="max-w-xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  {% if object %}
+    <h1 class="text-xl font-semibold text-gray-800">Edit <span class="text-teal-500">{{ object.name }}</span></h1>
+  {% else %}
+    <h1 class="text-xl font-semibold text-gray-800">Add Tag</h1>
+  {% endif %}
+
+  <form action="" method="post" class="mt-8">
+    {% csrf_token %}
+    <div class="grid grid-cols-1 gap-6">
+      {% for field in form %}
+        <div class="block">
+          <label for="{{ field.id_for_label }}" class="text-sm font-medium text-gray-700">{{ field.label_tag }}</label>
+          <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:'' }}" class="{% if field.errors %}border-red-500{% else %}border-gray-300{% endif %} mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" {% if field.field.required %}required{% endif %}>
+          {% if field.help_text %}
+            <p class="mt-2 text-sm text-gray-500">{{ field.help_text }}</p>
+          {% endif %}
+          {% if field.errors %}
+            <p class="text-sm text-red-600">{{ field.errors }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <input type="submit" value="Submit" class="mt-6 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+  </form>
+</div>
+{% endblock %}

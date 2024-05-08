@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Project
+from django.views.generic import ListView, DetailView
+from .models import Project, Tag
 from .forms import FeedbackForm
 
 # Create your views here.
@@ -28,10 +29,14 @@ def projects_index(request):
 
 def projects_detail(request, project_id):
    project = Project.objects.get(id=project_id)
+   tags = Tag
+   id_list = project.tags.all().values_list('id')
+   tags_project_doesnt_have = Tag.objects.exclude(id__in=id_list)
    feedback_form = FeedbackForm()
    return render(request, 'projects/detail.html', {
       'project': project,
       'feedback_form': feedback_form,
+      'tags': tags_project_doesnt_have,
       })
 
 def add_feedback(request, pk):
@@ -42,9 +47,13 @@ def add_feedback(request, pk):
       new_feedback.save()
    return redirect('detail', project_id=pk)
 
+def assoc_tag(request, pk, tag_pk):
+   Project.objects.get(id=pk).tags.add(tag_pk)
+   return redirect('detail', project_id=pk)
+
 class ProjectCreate(CreateView):
   model = Project
-  fields = '__all__'
+  fields = ['name', 'technologies', 'description', 'live', 'created']
 
 class ProjectUpdate(UpdateView):
   model = Project
@@ -53,4 +62,22 @@ class ProjectUpdate(UpdateView):
 class ProjectDelete(DeleteView):
   model = Project
   success_url = '/projects'
+
+class TagList(ListView):
+  model = Tag
+
+class TagDetail(DetailView):
+  model = Tag
+
+class TagCreate(CreateView):
+  model = Tag
+  fields = '__all__'
+
+class TagUpdate(UpdateView):
+  model = Tag
+  fields = ['name']
+
+class TagDelete(DeleteView):
+  model = Tag
+  success_url = '/tags'
 
